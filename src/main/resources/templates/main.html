@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-cn"  xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>微事务管理平台</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css}" id="bscss"></link>
+  
+</head>
+<body>
+
+
+<nav class="navbar navbar-default navbar-static-top" style="margin:0px;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <span class="navbar-brand">微事务管理平台</span>
+        </div>
+        <p class="navbar-text navbar-right" style="margin-right:20px"><a href="#" class="navbar-link">退出</a></p>
+        <p class="navbar-text navbar-right">登录用户:<span class="text-danger h4">[<shiro:principal/>] </span></p>
+
+    </div>
+</nav>
+ 
+<div class="row">
+    <div class="col-sm-3 col-md-2 sidebar" style="padding: 0px;color: white;background-color: #2e6da4;height: 100%;">
+		<div class="table-responsive text-center">
+           <!-- 利用data-target指定要折叠的分组列表 -->
+           <div class="menu_open" id="transactionHeading"  data-toggle="collapse" data-target="#transaction" >
+               <h4>我的事务<span style="margin: 0 5px" class="glyphicon glyphicon-chevron-up left"></span></h4>
+           </div>
+           <!-- .panel-collapse和.collapse标明折叠元素 .in表示要显示出来 -->
+           <div id="transaction" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="transactionHeading">
+               <ul class="nav nav-list">
+                   <li><a href="http://www.baidu.com">待办已办</a></li>
+                   <li><a>上报事务</a></li>
+                   <li><a data-target="test2.html">发起事务</a></li>
+               </ul>
+           </div>
+        </div>
+    	<div  class="table-responsive text-center">
+               <div class="menu_open" id="companyTransactionHeading" data-toggle="collapse" data-target="#companyTransaction">
+                   <h4>单位事务<span  style="margin: 0 5px" class="glyphicon glyphicon-chevron-down right"></span></h4>
+               </div>
+               <div id="companyTransaction" class="panel-collapse collapse" role="tabpanel" aria-labelledby="companyTransactionHeading">
+                   <ul class="nav nav-list">
+                       <li><a data-target="www.baidu.com">通知公告</a></li>
+                       <li><a data-target="test2.html">会议管理</a></li>
+                       <li><a data-target="test2.html">文件管理</a></li>
+                   </ul>
+               </div>
+        </div>
+	
+		<div class="table-responsive text-center">
+           <!-- 利用data-target指定要折叠的分组列表 -->
+           <div class="menu_open" id="settingHeading"  data-toggle="collapse" data-target="#setting" >
+               <h4>系统设置<span style="margin: 0 5px" class="glyphicon glyphicon-chevron-up left"></span></h4>
+           </div>
+           <!-- .panel-collapse和.collapse标明折叠元素 .in表示要显示出来 -->
+           <div id="setting" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="settingHeading">
+               <ul class="nav nav-list">
+                   <li><a href="http://www.baidu.com">本人信息设置</a></li>
+                   <li><a>修改密码</a></li>
+            	   <shiro:hasRole name="admin">  
+            	   <li><a data-target="test2.html">系统属性设置</a></li>
+                   <li><a data-target="test2.html">单位机构设置</a></li>
+            	   </shiro:hasRole>  
+               </ul>
+           </div>
+        </div>
+  
+    </div>
+    <div class="col-sm-9 col-md-10 sidebar">
+    </div>
+</div>
+
+<script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<script src="../static/js/jquery.form.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.form.js"></script>
+<script type="text/javascript">
+</script>
+</body>
+</html>
