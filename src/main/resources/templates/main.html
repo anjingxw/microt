@@ -12,13 +12,12 @@
 </head>
 <body>
 
-
 <nav class="navbar navbar-default navbar-static-top" style="margin:0px;">
     <div class="container-fluid">
         <div class="navbar-header">
             <span class="navbar-brand">微事务管理平台</span>
         </div>
-        <p class="navbar-text navbar-right" style="margin-right:20px"><a href="#" class="navbar-link">退出</a></p>
+        <p class="navbar-text navbar-right" style="margin-right:20px"><a id="logout" href="#" class="navbar-link">退出</a></p>
         <p class="navbar-text navbar-right">登录用户:<span class="text-danger h4">[<shiro:principal/>] </span></p>
 
     </div>
@@ -26,7 +25,13 @@
  
 <div class="row">
     <div class="col-sm-3 col-md-2 sidebar" style="padding: 0px;color: white;background-color: #2e6da4;height: 100%;">
-		<div class="table-responsive text-center">
+		<div style="text-align:center;margin: 40px 0;">
+            <img style="margin: auto; width: 120px;height: 120px;" class="img-circle" src="../static/img/test.png"/>
+            <h4 th:text="(${userInfo.displayName} != null) ? ${userInfo.displayName} : ${userInfo.loginName} "></h4>
+            <h5>工作综合得分：<span th:text="${userInfo.rating}"></span>分</h5>
+        </div>
+
+        <div class="table-responsive text-center">
            <!-- 利用data-target指定要折叠的分组列表 -->
            <div class="menu_open" id="transactionHeading"  data-toggle="collapse" data-target="#transaction" >
                <h4>我的事务<span style="margin: 0 5px" class="glyphicon glyphicon-chevron-up left"></span></h4>
@@ -62,7 +67,7 @@
            <div id="setting" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="settingHeading">
                <ul class="nav nav-list">
                    <li><a href="http://www.baidu.com">本人信息设置</a></li>
-                   <li><a>修改密码</a></li>
+                   <li><a href="#" id="changepwd">修改密码</a></li>
             	   <shiro:hasRole name="admin">  
             	   <li><a data-target="test2.html">系统属性设置</a></li>
                    <li><a data-target="test2.html">单位机构设置</a></li>
@@ -73,16 +78,30 @@
   
     </div>
     <div class="col-sm-9 col-md-10 sidebar">
+        <div id="main"></div>
     </div>
 </div>
 
+<div th:remove = "all">
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/bootstrap.min.js"></script>
 <script src="../static/js/jquery.form.js"></script>
+</div>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.form.js"></script>
 <script type="text/javascript">
+    $('#logout').on('click', function(){
+        $.post("/user/logout", function () {
+            window.location.href="login";
+        });
+    });
+    
+    $('#changepwd').on('click', function(){
+        $.get("changepwd", function (data) {
+            $("#main").html(data);
+        });
+    });
 </script>
 </body>
 </html>

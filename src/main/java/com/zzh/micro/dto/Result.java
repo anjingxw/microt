@@ -17,8 +17,8 @@ public class Result<T>  {
 	}
 
 	// 错误时的构造器
-	public Result(boolean success, String error) {
-		this.success = success;
+	public Result(String error) {
+		this.success = false;
 		this.error = error;
 	}
 

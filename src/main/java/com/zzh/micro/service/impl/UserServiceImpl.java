@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zzh.micro.comm.Const;
-import com.zzh.micro.dto.LoginResult;
+import com.zzh.micro.dto.UserInfo;
 import com.zzh.micro.dto.Result;
 import com.zzh.micro.entity.User;
 import com.zzh.micro.repository.UserReprository;
@@ -23,32 +23,58 @@ public class UserServiceImpl implements UserService {
 	UserReprository userReprository;
  
 	@Override
-	public Result<LoginResult> login(User _user) {
+	public Result<UserInfo> login(User _user) {
 		try{
 			UsernamePasswordToken token = new UsernamePasswordToken(_user.getLoginName(),  MD5Util.encrypt(_user.getPassword() + Const.PASSWORD_KEY));
 			token.setRememberMe(true);
 			SecurityUtils.getSubject().login(token); 
 		} catch ( UnknownAccountException uae ) {
-			return new Result<>(false, "用户不存在");
+			return new Result<>("用户不存在");
 		} catch ( IncorrectCredentialsException ice ) {
-			UpdateLoginErrorInfo(_user.getLoginName());
-			return new Result<>(false, "密码错误");
+//			UpdateLoginErrorInfo(_user.getLoginName());
+			return new Result<>("密码错误");
 		} catch (LockedAccountException lae ) {
-			return new Result<>(false, "账户被锁定");
+			return new Result<>("账户被锁定");
 		}
 		catch (Exception e) {
 		}
  
 		UpdateLoginInfo(_user.getLoginName());
 		User user = userReprository.findByLoginName(_user.getLoginName());
-		LoginResult  result = new LoginResult(user.getUserID(), user.getLoginName(), user.getAppLoginToken());
-		return new Result<LoginResult>(true, result); 
+		UserInfo  result = new UserInfo(user.getUserID()
+				, user.getLoginName()
+				, user.getDisplayName()
+				, user.getAvatars()
+				, 80L
+				, user.getAppLoginToken());
+		return new Result<UserInfo>(true, result); 
 	}
 
-	//	
-	private void UpdateLoginErrorInfo(String loginName){
+	@Override
+	public Result<String>  logout(){
+		SecurityUtils.getSubject().logout();
+		return new Result<String>(true, "login");
 	}
 	
+	/**
+	 * 修改密码
+	 */
+	public Result<String>  changePwd(String old, String newPwd){
+		UserInfo info = (UserInfo)SecurityUtils.getSubject().getSession().getAttribute(Const.LOGIN_SESSION_KEY);
+		User user = userReprository.findByUserID(info.getUserID());
+		if (!MD5Util.encrypt(old + Const.PASSWORD_KEY).equals(user.getPassword())) {
+			return new Result<>("原密码错误");
+		}
+		
+		user.setPassword(MD5Util.encrypt(newPwd + Const.PASSWORD_KEY));
+		SecurityUtils.getSubject().logout();
+		return new Result<String>(true, "login");
+	}
+	
+//	//	
+//	private void UpdateLoginErrorInfo(String loginName){
+//	}
+//	
 	private void UpdateLoginInfo(String loginName){
 		
 	}

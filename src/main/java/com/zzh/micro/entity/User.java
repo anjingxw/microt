@@ -35,6 +35,8 @@ public class User  implements Serializable{
 	@Column(nullable = true)
 	private String displayName;
 	@Column(nullable = true)
+	private String avatars;
+	@Column(nullable = true)
 	private long lastLoginTime;
 	@Column(nullable = true)
 	private String lastLoginIp;
@@ -204,6 +206,17 @@ public class User  implements Serializable{
 		this.roles = roles;
 	}
 	
+	
+	public String getAvatars() {
+		return avatars;
+	}
+
+
+	public void setAvatars(String avatars) {
+		this.avatars = avatars;
+	}
+
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
