@@ -43,8 +43,8 @@ public class UserServiceImpl implements UserService {
 		User user = userReprository.findByLoginName(_user.getLoginName());
 		UserInfo  result = new UserInfo(user.getUserID()
 				, user.getLoginName()
-				, user.getDisplayName()
-				, user.getAvatars()
+				, user.getProperty()== null ? null :user.getProperty().getDisplayName()
+				, user.getProperty()== null ? null :user.getProperty().getAvatars()
 				, 80L
 				, user.getAppLoginToken());
 		return new Result<UserInfo>(true, result); 
@@ -67,6 +67,7 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		user.setPassword(MD5Util.encrypt(newPwd + Const.PASSWORD_KEY));
+		userReprository.save(user);
 		SecurityUtils.getSubject().logout();
 		return new Result<String>(true, "login");
 	}

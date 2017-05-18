@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -33,10 +35,6 @@ public class User  implements Serializable{
 	@Column(nullable = false)
 	private String password;
 	@Column(nullable = true)
-	private String displayName;
-	@Column(nullable = true)
-	private String avatars;
-	@Column(nullable = true)
 	private long lastLoginTime;
 	@Column(nullable = true)
 	private String lastLoginIp;
@@ -52,6 +50,10 @@ public class User  implements Serializable{
 	private String appLoginToken;
 	@Column(nullable = true)
 	private Long   fingerprintVerification;
+	
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "userPropertyID")
+    private UserProperty property;
 	
 	@ManyToOne 
 	@JoinColumn(name="companyID")  
@@ -96,16 +98,6 @@ public class User  implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-
-	public String getDisplayName() {
-		return displayName;
-	}
-
-
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
 	}
 	
 	public long getLastLoginTime() {
@@ -182,7 +174,6 @@ public class User  implements Serializable{
 		return fingerprintVerification;
 	}
 
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -191,35 +182,31 @@ public class User  implements Serializable{
 		return company;
 	}
 
-
 	public void setCompany(Company company) {
 		this.company = company;
 	}
-
 
 	public Set<Role> getRoles() {
 		return roles;
 	}
 
-
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
-	
-	public String getAvatars() {
-		return avatars;
-	}
-
-
-	public void setAvatars(String avatars) {
-		this.avatars = avatars;
-	}
-
 
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "userName " + this.loginName + ", pasword " + this.displayName;
+		return "userName " + this.loginName + ", pasword " + this.loginName;
+	}
+
+
+	public UserProperty getProperty() {
+		return property;
+	}
+
+
+	public void setProperty(UserProperty property) {
+		this.property = property;
 	}
 }

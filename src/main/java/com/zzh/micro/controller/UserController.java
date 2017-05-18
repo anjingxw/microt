@@ -17,7 +17,6 @@ import com.zzh.micro.dto.UserInfo;
 import com.zzh.micro.dto.Result;
 import com.zzh.micro.entity.User;
 import com.zzh.micro.service.UserService;
-import com.zzh.micro.util.MD5Util;
 
 /**
  * 
