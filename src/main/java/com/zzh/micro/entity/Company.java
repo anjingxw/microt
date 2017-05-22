@@ -1,8 +1,8 @@
 package com.zzh.micro.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -33,9 +33,13 @@ public class Company implements Serializable {
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)  
 	@JoinColumn(name="companyID")//注释的是另一个表指向本表的外键。
-	private List<User> users = new ArrayList<User>();
+	private Set<User> users = new HashSet<User>();
 	
-	public List<User> getUsers() {
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)  
+	@JoinColumn(name="companyID")//注释的是另一个表指向本表的外键。
+	private Set<CompanyDepartment> departments = new HashSet<CompanyDepartment>();
+	
+	public Set<User> getUsers() {
 		return users;
 	}
 
@@ -69,7 +73,7 @@ public class Company implements Serializable {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public void setUsers(List<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 	

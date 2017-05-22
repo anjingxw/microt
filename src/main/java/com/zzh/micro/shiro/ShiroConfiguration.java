@@ -48,7 +48,7 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setSuccessUrl("/main");  
         
-        Map<String,String> map = new LinkedHashMap<>();
+        Map<String,String> map = new LinkedHashMap<String,String>();
         map.put("/css/**","anon");
         map.put("/bootstrap/**","anon");
         map.put("/js/**","anon");

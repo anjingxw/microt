@@ -51,14 +51,23 @@ public class User  implements Serializable{
 	@Column(nullable = true)
 	private Long   fingerprintVerification;
 	
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userPropertyID")
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name="userPropertyID" )
     private UserProperty property;
+    
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "userPostID")
+    private UserPost post;
 	
 	@ManyToOne 
 	@JoinColumn(name="companyID")  
 	@NotNull  
 	private Company company;
+	
+	@ManyToOne 
+	@JoinColumn(name="departmentID")  
+	@NotNull  
+	private CompanyDepartment department;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "t_user_role"
@@ -209,4 +218,26 @@ public class User  implements Serializable{
 	public void setProperty(UserProperty property) {
 		this.property = property;
 	}
+
+
+	public UserPost getPost() {
+		return post;
+	}
+
+
+	public void setPost(UserPost post) {
+		this.post = post;
+	}
+
+
+	public CompanyDepartment getDepartment() {
+		return department;
+	}
+
+
+	public void setDepartment(CompanyDepartment department) {
+		this.department = department;
+	}
+	
+	
 }

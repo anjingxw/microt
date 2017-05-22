@@ -2,10 +2,13 @@ package com.zzh.micro.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,17 +20,25 @@ public class UserProperty  implements Serializable{
 	@Id
 	@GeneratedValue
 	private Long   userPropertyID;
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = false)
 	private String displayName;
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String avatars;
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Long birthday;
 	@Column(nullable = false)
+	private int Gender;
+	@Column(nullable = true)
 	private Long mobile;
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private Long phone;	
 	
+	public int getGender() {
+		return Gender;
+	}
+	public void setGender(int gender) {
+		Gender = gender;
+	}
 	public String getDisplayName() {
 		return displayName;
 	}
