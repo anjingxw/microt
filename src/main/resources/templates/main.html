@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-cn"  xmlns:th="http://www.thymeleaf.org"
 	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
-<head>
+<link>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
     <title>微事务管理平台</title>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css}" id="bscss"></link>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css}" id="bscss"/>
   
 </head>
 <body>
@@ -93,7 +93,7 @@
 <script type="text/javascript">
     $('#logout').on('click', function(){
         $.post("/user/logout", function () {
-            window.location.href="login";
+        	window.location.replace="/login";
         });
     });
     

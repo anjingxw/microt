@@ -13,6 +13,12 @@ import com.zzh.micro.entity.Role;
 import com.zzh.micro.entity.User;
 import com.zzh.micro.entity.UserPost;
 import com.zzh.micro.entity.UserProperty;
+import com.zzh.micro.repository.CompanyDepartmentReprository;
+import com.zzh.micro.repository.CompanyReprository;
+import com.zzh.micro.repository.RoleReprository;
+import com.zzh.micro.repository.UserPostReprository;
+import com.zzh.micro.repository.UserPropertyReprository;
+import com.zzh.micro.repository.UserReprository;
 import com.zzh.micro.util.DateUtils;
 import com.zzh.micro.util.MD5Util;
 ;
@@ -50,10 +56,12 @@ public class UserReprositoryTest {
 		CompanyDepartment department = new CompanyDepartment();
 		department.setDepartmentName("A");
 		department.setCompany(company);
+		department.setCreateUserID(0L);
 		companyDepartmentReprository.save(department);
 		CompanyDepartment departmentb = new CompanyDepartment();
 		departmentb.setDepartmentName("B");
 		departmentb.setCompany(company);
+		departmentb.setCreateUserID(0L);
 		companyDepartmentReprository.save(departmentb);
 		
 		UserPost userPost= new UserPost();

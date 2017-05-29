@@ -53,6 +53,7 @@ public class ShiroConfiguration {
         map.put("/bootstrap/**","anon");
         map.put("/js/**","anon");
         map.put("/user/*","anon");
+        map.put("/department/*","anon");
         map.put("/main","authc");
     	
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);

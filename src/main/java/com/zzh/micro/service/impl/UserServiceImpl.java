@@ -7,11 +7,14 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zzh.micro.comm.Const;
 import com.zzh.micro.dto.UserInfo;
 import com.zzh.micro.dto.Result;
 import com.zzh.micro.entity.User;
+import com.zzh.micro.entity.UserProperty;
+import com.zzh.micro.repository.UserPropertyReprository;
 import com.zzh.micro.repository.UserReprository;
 import com.zzh.micro.service.UserService;
 import com.zzh.micro.util.MD5Util;
@@ -21,6 +24,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	UserReprository userReprository;
+	@Autowired
+	UserPropertyReprository userPropertyReprository;
  
 	@Override
 	public Result<UserInfo> login(User _user) {
@@ -76,7 +81,31 @@ public class UserServiceImpl implements UserService {
 //	private void UpdateLoginErrorInfo(String loginName){
 //	}
 //	
-	private void UpdateLoginInfo(String loginName){
-		
+	@Override
+	@Transactional
+	public Result<Boolean> addUser(User user){
+		userReprository.save(user);
+	    return new Result<Boolean>(true, true);
+	}
+	 
+	@Override
+	@Transactional
+	public Result<Boolean> updateUser(User user){
+		userReprository.save(user);
+	    return new Result<Boolean>(true, true);
+	}
+	 
+	 private void UpdateLoginInfo(String loginName){
+	 }
+	
+	public Result<Boolean> resetPwd(Long userId){
+		User user = userReprository.findOne(userId);
+		user.setPassword(MD5Util.encrypt("000000" + Const.PASSWORD_KEY));
+		return new Result<Boolean>(true, true);
+	}
+	
+	public Result<Boolean> updateUserProperty(UserProperty property){
+		userPropertyReprository.save(property);
+		return new Result<Boolean>(true, true);
 	}
 }

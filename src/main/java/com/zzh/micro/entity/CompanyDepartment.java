@@ -35,6 +35,11 @@ public class CompanyDepartment  implements Serializable{
 	@NotNull  
 	private Company company;
 	
+	@Column(nullable = false)
+	private Long createUserID;
+	
+	@Column(nullable = false)
+	private long createTime;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)  
 	@JoinColumn(name="departmentID")
@@ -70,14 +75,28 @@ public class CompanyDepartment  implements Serializable{
 		this.company = company;
 	}
 
-
 	public Set<User> getUsers() {
 		return users;
 	}
-
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 
+	public Long getCreateUserID() {
+		return createUserID;
+	}
+
+	public void setCreateUserID(Long createUserID) {
+		this.createUserID = createUserID;
+	}
+
+	public long getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(long createTime) {
+		this.createTime = createTime;
+	}
+	
 }

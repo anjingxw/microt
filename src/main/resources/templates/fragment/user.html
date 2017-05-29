@@ -31,15 +31,27 @@
     </div>
 </div>
 <div style="padding: 100px 100px 10px; text-align: center;" th:fragment="changepwd">
-    <form  role="form"  action="/user/changepwd" method="post" style="max-width: 500px;">
+	<script>
+	 $("#form_changepwd").ajaxForm({
+	        dataType:"json",
+	        success:function (msg) {
+	            if(msg.success){
+	            	 alert(msg.success);
+	                return;
+	            }
+	            alert(msg.error);
+	        }
+	  });
+	</script>
+    <form  id="form_changepwd" role="form"  action="/user/changepwd" method="post" style="max-width: 300px;">
         <div class="input-group">
             <span class="input-group-addon">原密码</span>
-            <input type="password" class="form-control" placeholder="请输入原密码">
+            <input type="password" name="oldPwd" class="form-control" placeholder="请输入原密码">
         </div>
         <br>
         <div class="input-group">
             <span class="input-group-addon">新密码</span>
-            <input type="password" class="form-control" placeholder="请输入新密码">
+            <input type="password" name="newPwd" class="form-control" placeholder="请输入新密码">
         </div>
         <br>
         <div class="input-group">
@@ -47,7 +59,7 @@
             <input type="password" class="form-control" placeholder="请确认新密码">
         </div>
         
-        <button class="btn btn-sm btn-primary btn-block" type="submit" style="margin-top: 20px">登录</button>
+        <button class="btn btn-sm btn-primary btn-block" type="submit" style="margin-top: 20px">确定</button>
     </form>
 </div>
 </body>

@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -50,6 +51,9 @@ public class User  implements Serializable{
 	private String appLoginToken;
 	@Column(nullable = true)
 	private Long   fingerprintVerification;
+	@Column(nullable = false)
+	private boolean valid;
+	
 	
     @OneToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name="userPropertyID" )
@@ -74,6 +78,31 @@ public class User  implements Serializable{
 	, inverseJoinColumns={@JoinColumn(name="roles", referencedColumnName="roleID")} 
 	, joinColumns ={@JoinColumn(name="users", referencedColumnName="userID")})
 	private Set<Role> roles = new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "t_user_internalfile"
+	, inverseJoinColumns ={@JoinColumn(name="internalFiles", referencedColumnName="internalFileID")} //表在中间表中的列名
+	, joinColumns ={@JoinColumn(name="users", referencedColumnName="userID")}) //指定受控方的列名
+	private Set<InternalFile> internalFiles = new HashSet<>();
+
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "t_user_externalfile"
+	, inverseJoinColumns ={@JoinColumn(name="externalFiles", referencedColumnName="externalFileID")} //表在中间表中的列名
+	, joinColumns ={@JoinColumn(name="users", referencedColumnName="userID")}) //指定受控方的列名
+	private Set<ExternalFile> externalFiles = new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "t_notice_readuser"
+	, inverseJoinColumns = {@JoinColumn(name="readNotices", referencedColumnName="noticeID")} //表在中间表中的列名
+	, joinColumns = {@JoinColumn(name="readUsers", referencedColumnName="userID")}) //指定受控方的列名
+	private Set<Notice> readNotices = new HashSet<>();
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "t_notice_unreaduser"
+	, inverseJoinColumns = {@JoinColumn(name="unreadNotices", referencedColumnName="noticeID")} //表在中间表中的列名
+	, joinColumns = {@JoinColumn(name="unreadUsers", referencedColumnName="userID")}) //指定受控方的列名
+	private Set<Notice> unreadNotices = new HashSet<>();
+	
 	
 	public void setFingerprintVerification(Long fingerprintVerification) {
 		this.fingerprintVerification = fingerprintVerification;
@@ -238,6 +267,14 @@ public class User  implements Serializable{
 	public void setDepartment(CompanyDepartment department) {
 		this.department = department;
 	}
-	
-	
+
+
+	public boolean isValid() {
+		return valid;
+	}
+
+
+	public void setValid(boolean valid) {
+		this.valid = valid;
+	}
 }

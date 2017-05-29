@@ -75,7 +75,13 @@ public class UserController extends BaseController{
 	     */
 	    @RequestMapping("/logout")
 		@ResponseBody
-	    public  Result<String> logout(HttpSession session) throws Exception {
+	    public  Result<String> logout(HttpServletResponse response) throws Exception {
+	    	response.setHeader("Pragma","No-cache");  
+	    	response.setHeader("Cache-Control","No-cache");  
+	    	response.setDateHeader("Expires", -1);  
+	    	response.setHeader("Cache-Control", "No-store"); 
 	    	return userService.logout();
 	    }
+	    
+
 }

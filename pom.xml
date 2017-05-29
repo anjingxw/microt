@@ -78,6 +78,12 @@
            <artifactId>shiro-spring</artifactId>  
            <version>1.2.3</version>  
         </dependency>  
+        <dependency>
+			<groupId>org.easymock</groupId>
+		  <artifactId>easymock</artifactId>
+		  <version>3.4</version>
+		  <scope>test</scope>
+</dependency>
        
 	</dependencies>
 

@@ -1,8 +1,8 @@
 package com.zzh.micro.dto;
 
 public class PageBean {
-	private int page; // ҳ��
-    private int pageSize; // ��ҳ������
+	private int page; // 
+    private int pageSize; // 
     //private int start;
 
 
